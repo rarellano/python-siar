@@ -1,31 +1,14 @@
-from exceptions import (
-    BadRequestException,
-    UnauthorizedException,
-    ForbidenException,
-    InternalServerErrorException,
-)
-
+import json
 
 def siar_exceptions(func):
     def wrapper(*args, **kwargs):
         response = func(*args, **kwargs)
 
-        msg = response.json()["MensajeRespuesta"]
-
-        if response.status_code == 400:
-            raise BadRequestException(msg)
-
-        if response.status_code == 401:
-            raise UnauthorizedException(msg)
-
-        if response.status_code == 403:
-            raise ForbidenException(msg)
-
-        if response.status_code == 500:
-            raise InternalServerErrorException(msg)
+        client = args[0]
+        if client.exceptions and not response.ok:
+            raise response.raise_for_status()
 
         return response
-
     return wrapper
 
 
