@@ -17,9 +17,10 @@ class SiarClient(object):
         provincies = "provincia"
         stations = "estacion"
 
-    def __init__(self, api_key, json=False, exceptions=True):
+    def __init__(self, api_key, date_string=False, json=False, exceptions=True):
         super().__init__()
         self.api_key = api_key
+        self.date_string = date_string
         self.json = json
         self.exceptions = exceptions
 
@@ -61,13 +62,24 @@ class SiarClient(object):
         endpoint = f"{API_URL}datos/{frequency_type}/{data_type}?"
         api_key = f"claveAPI={self.api_key}"
         ids = f'&id={"&id=".join(ids)}'
-        start_date = f"&fechaInicial={start_date}"
-        end_date = f"&fechaFinal={end_date}"
 
-        if modification_date:
-            modification_date = f"&fechaUltModificacion={modification_date}"
+        if self.date_string:
+            start_date = f"&fechaInicial={start_date}"
+            end_date = f"&fechaFinal={end_date}"
+
+            if modification_date:
+                modification_date = f"&fechaUltModificacion={modification_date}"
+            else:
+                modification_date = ""
         else:
-            modification_date = ""
+            start_date = f'&fechaInicial={start_date.strftime("%Y-%m-%d")}'
+            end_date = f'&fechaFinal={end_date.strftime("%Y-%m-%d")}'
+
+            if modification_date:
+                modification_date = f'&fechaUltModificacion={modification_date.strftime("%Y-%m-%d")}'
+            else:
+                modification_date = ""
+
 
         response = requests.get(
             f"{endpoint}{api_key}{ids}{start_date}{end_date}{modification_date}"
