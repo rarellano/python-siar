@@ -5,7 +5,7 @@ def siar_exceptions(func):
         response = func(*args, **kwargs)
 
         client = args[0]
-        if client.exceptions and not response.ok:
+        if client.exceptions_enabled and not response.ok:
             raise response.raise_for_status()
 
         return response
@@ -18,6 +18,5 @@ def response_json(func):
 
         client = args[0]
 
-        return response.json() if client.json else response
-
+        return response.json() if client.return_json else response
     return wrapper

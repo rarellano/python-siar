@@ -1,5 +1,5 @@
 import requests
-from decorators import siar_exceptions, response_json
+from siar.decorators import siar_exceptions, response_json
 from enum import Enum
 
 API_URL = "https://servicio.mapama.gob.es/apisiar/API/v1/"
@@ -17,12 +17,12 @@ class SiarClient(object):
         provincies = "provincia"
         stations = "estacion"
 
-    def __init__(self, api_key, date_string=False, json=False, exceptions=True):
+    def __init__(self, api_key, date_string=False, return_json=False, exceptions_enabled=True):
         super().__init__()
         self.api_key = api_key
         self.date_string = date_string
-        self.json = json
-        self.exceptions = exceptions
+        self.return_json = return_json
+        self.exceptions_enabled = exceptions_enabled
 
     @response_json
     @siar_exceptions
@@ -196,21 +196,6 @@ class SiarClient(object):
         response = self.__data_by_type(
             self.FrecuencyType.monthly.value,
             self.DataType.provincies.value,
-            ids,
-            start_date,
-            end_date=None,
-            modification_date=None,
-        )
-        return response
-
-    @response_json
-    @siar_exceptions
-    def data_ccaa_by_month(
-        self, ids, start_date, end_date=None, modification_date=None
-    ):
-        response = self.__data_by_type(
-            self.FrecuencyType.monthly.value,
-            self.DataType.ccaa.value,
             ids,
             start_date,
             end_date=None,
