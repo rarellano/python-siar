@@ -3,6 +3,8 @@
 ### Configuración del Cliente
 
 * **Uso básico:**
+	* pip install siar
+
     ```python
     	from siar.client import SiarClient
     	siar = SiarClient(api_key="YOUR_API_KEY")
