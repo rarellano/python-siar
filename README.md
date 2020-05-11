@@ -1,10 +1,12 @@
 ## Cliente python para Siar (Sistema de Información Agroclimática para el Riego)
-[Pipy Siar 0.02](https://pypi.org/project/siar/0.2/)
+[Pipy Siar 0.3](https://pypi.org/project/siar/0.3/)
 ### Configuración del Cliente
 
+* **Instalación:**
+	```python
+        pip install siar
+    ```
 * **Uso básico:**
-	* pip install siar
-
     ```python
     	from siar.client import SiarClient
     	siar = SiarClient(api_key="YOUR_API_KEY")

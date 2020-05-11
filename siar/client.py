@@ -17,7 +17,9 @@ class SiarClient(object):
         provincies = "provincia"
         stations = "estacion"
 
-    def __init__(self, api_key, date_string=False, return_json=False, exceptions_enabled=True):
+    def __init__(
+        self, api_key, date_string=False, return_json=False, exceptions_enabled=True
+    ):
         super().__init__()
         self.api_key = api_key
         self.date_string = date_string
@@ -27,22 +29,38 @@ class SiarClient(object):
     @response_json
     @siar_exceptions
     def info_access(self):
-        return requests.get(f"{API_URL}info/accesos?ClaveAPI={self.api_key}",)
+        return requests.get(
+            "{api_url}info/accesos?ClaveAPI={api_key}".format(
+                api_url=API_URL, api_key=self.api_key
+            )
+        )
 
     @response_json
     @siar_exceptions
     def info_ccaa(self):
-        return requests.get(f"{API_URL}info/ccaa?ClaveAPI={self.api_key}",)
+        return requests.get(
+            "{api_url}info/ccaa?ClaveAPI={api_key}".format(
+                api_url=API_URL, api_key=self.api_key
+            )
+        )
 
     @response_json
     @siar_exceptions
     def info_provincies(self):
-        return requests.get(f"{API_URL}info/provincias?ClaveAPI={self.api_key}",)
+        return requests.get(
+            "{api_url}info/provincias?ClaveAPI={api_key}".format(
+                api_url=API_URL, api_key=self.api_key
+            )
+        )
 
     @response_json
     @siar_exceptions
     def info_stations(self):
-        return requests.get(f"{API_URL}info/estaciones?ClaveAPI={self.api_key}",)
+        return requests.get(
+            "{api_url}info/estaciones?ClaveAPI={api_key}".format(
+                api_url=API_URL, api_key=self.api_key
+            )
+        )
 
     def __data_by_type(
         self,
@@ -59,30 +77,46 @@ class SiarClient(object):
         if isinstance(ids, str):
             ids = [ids]
 
-        endpoint = f"{API_URL}datos/{frequency_type}/{data_type}?"
-        api_key = f"claveAPI={self.api_key}"
-        ids = f'&id={"&id=".join(ids)}'
+        endpoint = "{api_url}datos/{frequency_type}/{data_type}?".format(
+            api_url=API_URL, frequency_type=frequency_type, data_type=data_type
+        )
+        api_key = "claveAPI={api_key}".format(api_key=self.api_key)
+        ids = "&id={ids_str}".format(ids_str="&id=".join(ids))
 
         if self.date_string:
-            start_date = f"&fechaInicial={start_date}"
-            end_date = f"&fechaFinal={end_date}"
+            start_date = "&fechaInicial={start_date}".format(start_date=start_date)
+            end_date = "&fechaFinal={end_date}".format(end_date=end_date)
 
             if modification_date:
-                modification_date = f"&fechaUltModificacion={modification_date}"
+                modification_date = "&fechaUltModificacion={modification_date}".format(
+                    modification_date=modification_date
+                )
             else:
                 modification_date = ""
         else:
-            start_date = f'&fechaInicial={start_date.strftime("%Y-%m-%d")}'
-            end_date = f'&fechaFinal={end_date.strftime("%Y-%m-%d")}'
+            start_date = "&fechaInicial={start_date_str}".format(
+                start_date_str=start_date.strftime("%Y-%m-%d")
+            )
+            end_date = "&fechaFinal={end_date_str}".format(
+                end_date_str=end_date.strftime("%Y-%m-%d")
+            )
 
             if modification_date:
-                modification_date = f'&fechaUltModificacion={modification_date.strftime("%Y-%m-%d")}'
+                modification_date = "&fechaUltModificacion={modification_date_str}".format(
+                    modification_date_str=modification_date.strftime("%Y-%m-%d")
+                )
             else:
                 modification_date = ""
 
-
         response = requests.get(
-            f"{endpoint}{api_key}{ids}{start_date}{end_date}{modification_date}"
+            "{endpoint}{api_key}{ids}{start_date}{end_date}{modification_date}".format(
+                endpoint=endpoint,
+                api_key=api_key,
+                ids=ids,
+                start_date=start_date,
+                end_date=end_date,
+                modification_date=modification_date,
+            )
         )
 
         return response
