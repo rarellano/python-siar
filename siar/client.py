@@ -14,7 +14,7 @@ class SiarClient(object):
 
     class DataType(Enum):
         ccaa = "ccaa"
-        provincies = "provincia"
+        provinces = "provincia"
         stations = "estacion"
 
     def __init__(
@@ -46,7 +46,7 @@ class SiarClient(object):
 
     @response_json
     @siar_exceptions
-    def info_provincies(self):
+    def info_provinces(self):
         return requests.get(
             "{api_url}info/provincias?ClaveAPI={api_key}".format(
                 api_url=API_URL, api_key=self.api_key
@@ -179,12 +179,12 @@ class SiarClient(object):
 
     @response_json
     @siar_exceptions
-    def data_provincies_by_hours(
+    def data_provinces_by_hours(
         self, ids, start_date, end_date=None, modification_date=None
     ):
         response = self.__data_by_type(
             self.FrecuencyType.hourly.value,
-            self.DataType.provincies.value,
+            self.DataType.provinces.value,
             ids,
             start_date,
             end_date=None,
@@ -194,12 +194,12 @@ class SiarClient(object):
 
     @response_json
     @siar_exceptions
-    def data_provincies_by_day(
+    def data_provinces_by_day(
         self, ids, start_date, end_date=None, modification_date=None
     ):
         response = self.__data_by_type(
             self.FrecuencyType.daily.value,
-            self.DataType.provincies.value,
+            self.DataType.provinces.value,
             ids,
             start_date,
             end_date=None,
@@ -209,12 +209,12 @@ class SiarClient(object):
 
     @response_json
     @siar_exceptions
-    def data_provincies_by_week(
+    def data_provinces_by_week(
         self, ids, start_date, end_date=None, modification_date=None
     ):
         response = self.__data_by_type(
             self.FrecuencyType.weekly.value,
-            self.DataType.provincies.value,
+            self.DataType.provinces.value,
             ids,
             start_date,
             end_date=None,
@@ -224,12 +224,12 @@ class SiarClient(object):
 
     @response_json
     @siar_exceptions
-    def data_provincies_by_month(
+    def data_provinces_by_month(
         self, ids, start_date, end_date=None, modification_date=None
     ):
         response = self.__data_by_type(
             self.FrecuencyType.monthly.value,
-            self.DataType.provincies.value,
+            self.DataType.provinces.value,
             ids,
             start_date,
             end_date=None,
