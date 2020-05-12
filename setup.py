@@ -4,7 +4,7 @@ setup(
     name = 'siar',
     packages = ['siar'],       
     include_package_data=False,
-    version = '0.3',
+    version = '0.5',
     description = 'Python client for Siar API (Agroclimatic Information for Spain)',
     author='Rafael Arellano',
     author_email="rarellano-dev@riseup.net",
