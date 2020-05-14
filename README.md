@@ -1,5 +1,5 @@
 ## Cliente python para Siar (Sistema de Información Agroclimática para el Riego)
-[Pipy Siar 0.5](https://pypi.org/project/siar/0.5/)
+[Pipy Siar](https://pypi.org/project/siar/)
 ### Configuración del Cliente
 
 * **Instalación:**
